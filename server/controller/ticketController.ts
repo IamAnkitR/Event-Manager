@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import { Ticket } from "../models/ticket.ts";
-import { Event } from "../models/event.ts";
+// import { Ticket } from "../models/ticket.ts";
+// import { Event } from "../models/event.ts";
+import { Ticket } from "../models/Ticket";
+import { Event } from "../models/Event";
 
 export const createTicket = async (req: Request, res: Response) => {
   try {
