@@ -24,7 +24,7 @@ const PORT: string | number = process.env.PORT || 3000;
   try {
     await mongoose.connect(uri);
     console.log("Connected to the database");
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT || PORT, () => {
       console.log(`Server is running on PORT: ${PORT}`);
     });
   } catch (error) {
