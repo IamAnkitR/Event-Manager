@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Ticket } from "../models/Ticket";
-import { Event } from "../models/Event";
+import { Ticket } from "../models/ticket";
+import { Event } from "../models/event";
 
 export const getAllEvents = async (_req: Request, res: Response) => {
   try {

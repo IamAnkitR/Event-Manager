@@ -2,7 +2,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface ITicket extends Document {
-  ticketNumber: string;
+  ticketNumber: number;
   price: number;
   eventId: mongoose.Types.ObjectId;
 }
@@ -10,8 +10,8 @@ export interface ITicket extends Document {
 const TicketSchema: Schema = new Schema(
   {
     ticketId: { type: String, required: true },
-    ticketNumber: { type: String, required: true },
-    price: { type: String, required: true },
+    ticketNumber: { type: Number, required: true },
+    price: { type: Number, required: true },
     eventId: { type: Schema.Types.ObjectId, ref: "Event", required: true }, // Reference to Event
   },
   {

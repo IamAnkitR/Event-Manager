@@ -6,8 +6,8 @@ import { ObjectId } from "bson";
 interface Ticket {
   _id: string;
   ticketId: string;
-  ticketNumber: string;
-  price: string;
+  ticketNumber: number;
+  price: number;
   new?: boolean;
 }
 
@@ -31,8 +31,8 @@ export const EventDetail: React.FC = () => {
   const [newTicket, setNewTicket] = useState<Ticket>({
     _id: "",
     ticketId: "",
-    ticketNumber: "",
-    price: "",
+    ticketNumber: 0,
+    price: 0,
   });
   const [deletedTickets, setDeletedTickets] = useState<string[]>([]);
   const [editMode, setEditMode] = useState<string | null>(null);
@@ -84,7 +84,7 @@ export const EventDetail: React.FC = () => {
             ...event,
             tickets: [...event.tickets, newTicketObject],
           });
-          setNewTicket({ _id: "", ticketId: "", ticketNumber: "", price: "" });
+          setNewTicket({ _id: "", ticketId: "", ticketNumber: 0, price: 0 });
         }
       }
     } catch (error: any) {
@@ -94,7 +94,7 @@ export const EventDetail: React.FC = () => {
 
   const handleAddTicket = () => {
     try {
-      setNewTicket({ _id: "", ticketId: "", ticketNumber: "", price: "" });
+      setNewTicket({ _id: "", ticketId: "", ticketNumber: 0, price: 0 });
       setIsAdding(!isAdding);
     } catch (error: any) {
       console.error("Error adding ticket: ", error.message);
@@ -277,20 +277,23 @@ export const EventDetail: React.FC = () => {
                 className="border border-gray-300 rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
-                type="text"
+                type="number"
                 placeholder="Ticket Number"
                 value={newTicket.ticketNumber}
                 onChange={(e) => {
-                  setNewTicket({ ...newTicket, ticketNumber: e.target.value });
+                  setNewTicket({
+                    ...newTicket,
+                    ticketNumber: Number(e.target.value),
+                  });
                 }}
                 className="border border-gray-300 rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
-                type="text"
+                type="number"
                 placeholder="Price"
                 value={newTicket.price}
                 onChange={(e) => {
-                  setNewTicket({ ...newTicket, price: e.target.value });
+                  setNewTicket({ ...newTicket, price: Number(e.target.value) });
                 }}
                 className="border border-gray-300 rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -336,13 +339,13 @@ export const EventDetail: React.FC = () => {
                   <td className="py-2 text-center">
                     {editMode === ticket._id ? (
                       <input
-                        type="text"
+                        type="number"
                         placeholder="Ticket Number"
                         value={newTicket.ticketNumber}
                         onChange={(e) =>
                           setNewTicket({
                             ...newTicket,
-                            ticketNumber: e.target.value,
+                            ticketNumber: Number(e.target.value),
                           })
                         }
                         className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -354,11 +357,14 @@ export const EventDetail: React.FC = () => {
                   <td className="py-2 text-center">
                     {editMode === ticket._id ? (
                       <input
-                        type="text"
+                        type="number"
                         placeholder="Price"
                         value={newTicket.price}
                         onChange={(e) =>
-                          setNewTicket({ ...newTicket, price: e.target.value })
+                          setNewTicket({
+                            ...newTicket,
+                            price: Number(e.target.value),
+                          })
                         }
                         className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />

@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-// import { Ticket } from "../models/ticket.ts";
-// import { Event } from "../models/event.ts";
-import { Ticket } from "../models/Ticket";
-import { Event } from "../models/Event";
+import { Ticket } from "../models/ticket";
+import { Event } from "../models/event";
 
 export const createTicket = async (req: Request, res: Response) => {
   try {
@@ -13,6 +11,12 @@ export const createTicket = async (req: Request, res: Response) => {
       return res
         .status(400)
         .json({ message: "Please provide all required fields" });
+    }
+
+    if (isNaN(ticketNumber) || isNaN(price)) {
+      return res
+        .status(400)
+        .json({ message: "Ticket number and price must be a number" });
     }
 
     const event: any = await Event.findById(eventId);
