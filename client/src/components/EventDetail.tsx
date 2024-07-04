@@ -61,8 +61,8 @@ export const EventDetail: React.FC = () => {
 
   const handleSaveClick = () => {
     try {
-      if (!newTicket.ticketNumber || !newTicket.price) {
-        alert("Please fill out both fields");
+      if (!newTicket.ticketId || !newTicket.ticketNumber || !newTicket.price) {
+        alert("Please fill out all fields");
         return;
       }
 
@@ -70,7 +70,7 @@ export const EventDetail: React.FC = () => {
         if (event) {
           const newTicketObject = {
             _id: String(new ObjectId()),
-            ticketId: (event?.tickets.length + 1).toString(),
+            ticketId: newTicket.ticketId,
             ticketNumber: newTicket.ticketNumber,
             price: newTicket.price,
             eventId: event?._id,
@@ -122,6 +122,7 @@ export const EventDetail: React.FC = () => {
   const handleEditTicket = async (ticketId: string) => {
     try {
       const updatedTicket = {
+        ticketId: newTicket.ticketId,
         ticketNumber: newTicket.ticketNumber,
         price: newTicket.price,
       };
@@ -268,6 +269,15 @@ export const EventDetail: React.FC = () => {
             <div className="flex space-x-4">
               <input
                 type="text"
+                placeholder="ticketId"
+                value={newTicket.ticketId}
+                onChange={(e) => {
+                  setNewTicket({ ...newTicket, ticketId: e.target.value });
+                }}
+                className="border border-gray-300 rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="text"
                 placeholder="Ticket Number"
                 value={newTicket.ticketNumber}
                 onChange={(e) => {
@@ -292,73 +302,6 @@ export const EventDetail: React.FC = () => {
               </button>
             </div>
           )}
-          {/* <ul className="space-y-2">
-            {ticketsArray?.map((ticket, index) => (
-              <li
-                key={ticket._id}
-                className="bg-white shadow-lg rounded-lg p-4 flex items-center justify-between"
-              >
-                {editMode === ticket._id ? ( // Check if current ticket is in edit mode
-                  <div className="flex space-x-4">
-                    <input
-                      type="text"
-                      placeholder="Ticket Number"
-                      value={newTicket.ticketNumber}
-                      onChange={(e) =>
-                        setNewTicket({
-                          ...newTicket,
-                          ticketNumber: e.target.value,
-                        })
-                      }
-                      className="border border-gray-300 rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Price"
-                      value={newTicket.price}
-                      onChange={(e) =>
-                        setNewTicket({ ...newTicket, price: e.target.value })
-                      }
-                      className="border border-gray-300 rounded-lg p-2 w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                ) : (
-                  <div>
-                    <span className="text-gray-600">ID: {index + 1}</span>
-                    <span className="text-gray-600 ml-4">
-                      Ticket No: {ticket.ticketNumber}
-                    </span>
-                    <span className="text-gray-600 ml-4">
-                      Price: {ticket.price}
-                    </span>
-                  </div>
-                )}
-                <div className="space-x-2">
-                  {editMode === ticket._id ? ( // Toggle edit and save button
-                    <button
-                      onClick={() => handleSaveTicket(ticket._id)}
-                      className="bg-green-500 text-white py-1 px-3 rounded-lg hover:bg-green-700 transition-colors duration-300"
-                    >
-                      Save
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => setEditMode(ticket._id)} // Activate edit mode for this ticket
-                      className="bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-700 transition-colors duration-300"
-                    >
-                      Edit
-                    </button>
-                  )}
-                  <button
-                    onClick={() => handleDeleteTicket(ticket._id)}
-                    className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-700 transition-colors duration-300"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul> */}
           <table className="min-w-full bg-white mx-auto">
             <thead>
               <tr>
@@ -371,7 +314,25 @@ export const EventDetail: React.FC = () => {
             <tbody>
               {ticketsArray.map((ticket, index) => (
                 <tr key={ticket._id} className="bg-gray-100 border-b">
-                  <td className="py-2 text-center">{index + 1}</td>
+                  {/* <td className="py-2 text-center">{ticket.ticketId}</td> */}
+                  <td className="py-2 text-center">
+                    {editMode === ticket._id ? (
+                      <input
+                        type="text"
+                        placeholder="ticketId"
+                        value={newTicket.ticketId}
+                        onChange={(e) =>
+                          setNewTicket({
+                            ...newTicket,
+                            ticketId: e.target.value,
+                          })
+                        }
+                        className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    ) : (
+                      <span>{ticket.ticketId}</span>
+                    )}
+                  </td>
                   <td className="py-2 text-center">
                     {editMode === ticket._id ? (
                       <input

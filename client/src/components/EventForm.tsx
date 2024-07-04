@@ -15,10 +15,6 @@ export const EventForm: React.FC = () => {
   const [organizer, setOrganizer] = useState("");
   const [tickets, setTickets] = useState<Ticket[]>([]);
 
-  const handleAddTicket = (ticket: Ticket) => {
-    setTickets([...tickets, ticket]);
-  };
-
   const handleSaveEvent = async () => {
     try {
       const eventData = {
