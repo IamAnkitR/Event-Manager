@@ -36,6 +36,6 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["."],
-  "exclude": ["tests"]
+  "include": ["*/"],
+  "exclude": ["node_modules", "dist"]
 }

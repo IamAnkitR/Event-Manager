@@ -2,15 +2,18 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import ticketRouter from "./routes/ticketRoutes.ts";
 import eventRouter from "./routes/eventRoutes.ts";
 
 const app: Express = express();
 
 dotenv.config();
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/v1", ticketRouter);
 app.use("/api/v1", eventRouter);
 
 const uri: string =
